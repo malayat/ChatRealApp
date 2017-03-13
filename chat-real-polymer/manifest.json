@@ -1,0 +1,7 @@
+{
+  "name": "chat-real-polymer",
+  "short_name": "chat-real-polymer",
+  "description": "Polymer App with Firebase. Chat App",
+  "start_url": "/",
+  "display": "standalone"
+}

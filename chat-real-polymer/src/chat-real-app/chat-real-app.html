@@ -1,0 +1,70 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="chat-real-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+
+    <firebase-app
+    auth-domain="chat-real-b1442.firebaseapp.com"
+    database-url="https://chat-real-b1442.firebaseio.com"
+    storage-bucket="chat-real-b1442.appspot.com"
+    api-key="AIzaSyBIzJR8b3xcjLRp0mCKaPvp9-yGWqBwCsU">
+    </firebase-app>
+
+    <firebase-auth id="auth" user="{{user}}" provider="google" on-error="handleError">
+    </firebase-auth>
+
+    <paper-button hidden$="[[user]]" raised on-tap="login">
+      LOG IN
+    </paper-button>
+
+    <paper-button hidden$="[[!user]]" raised on-tap="logout">
+      LOG OUT
+    </paper-button>
+
+    <template is="dom-if" if="[[user]]" restamp="true">
+      <span>
+        Hello {{user.email}}
+      </span>
+    </template>
+
+    <template is="dom-if" if="[[!user]]" restamp="true">
+      <span>
+        <-- Click this to loging!
+      </span>
+    </template>
+    
+  </template>
+
+  <script>
+    Polymer({
+      is: 'chat-real-app',
+
+      properties: {
+        user: Object,
+      },
+
+      login: function() {
+        this.$.auth.signInWithPopup()
+        .then(function(response) {})
+        .catch(function(error) {
+          console.log(error);
+          });;
+      },
+
+      logout: function() {
+        this.$.auth.signOut();
+      }
+    });
+  </script>
+</dom-module>
